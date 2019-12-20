@@ -1,7 +1,6 @@
 import { OnInit, Component, ViewChild } from '@angular/core';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
-import 'codemirror/mode/javascript/javascript';
-
+// import 'codemirror/mode/javascript/javascript';
 
 @Component({
   selector: 'app-editor',
@@ -26,8 +25,13 @@ import 'codemirror/mode/javascript/javascript';
   `;
   
   readonly codemirrorOptions = {
-    lineNumbers: true,
+    lineNumbers: false,
     theme: 'material',
-    mode: { name: 'javascript', typescript: true },
+    autofocus: true,
+    // viewportMargin: Infinity,
+    mode: {
+      name: 'javascript',
+      typescript: true,
+    }
   };
 }

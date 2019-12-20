@@ -2,6 +2,9 @@
 .column {
   float: left;
   width: 50%;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 /* Clear floats after the columns */

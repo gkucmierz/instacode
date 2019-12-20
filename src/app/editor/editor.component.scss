@@ -1,0 +1,10 @@
+
+::ng-deep .CodeMirror {
+  border: 1px solid #eee;
+  border-bottom: 0;
+  height: auto;
+}
+::ng-deep .CodeMirror-scroll {
+  // overflow-y: hidden;
+  // overflow-x: auto;
+}
