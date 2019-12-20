@@ -12,7 +12,7 @@ import 'codemirror/mode/javascript/javascript';
 export class EditorComponent {
   @ViewChild('codeEditor', { static: true }) codeEditor: CodemirrorComponent;
 
-  private sourceCode = `
+  sourceCode = `
 // https://gist.github.com/gkucmierz/97a36a8ccdb37557cac6af847745e3be
 // play sine wave in browser
 
@@ -31,7 +31,7 @@ const sound = (() => {
 
 setInterval(sound.play, 2e3);
 `;
-  
+
   readonly codemirrorOptions = {
     value: 'dupa',
     theme: 'monokai',
