@@ -1,12 +1,12 @@
 
-<div class="row">
-
-  <div class="column">
-    <app-editor></app-editor>
-  </div>
-
-  <div class="column">
-    <app-result></app-result>
-  </div>
+<as-split direction="horizontal">
   
-</div>
+  <as-split-area minSize="5">
+    <app-editor></app-editor>
+  </as-split-area>
+  
+  <as-split-area minSize="5">
+    <app-result></app-result>
+  </as-split-area>
+
+</as-split>
