@@ -1,7 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "../node_modules/codemirror/lib/codemirror.css";
-@import "../node_modules/codemirror/theme/neat.css";
+
+@import "~codemirror/lib/codemirror";
+@import "~codemirror/theme/monokai";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// monokai
+body {
+  background: #272822;
+  color: #f8f8f2;
+}
