@@ -15,20 +15,31 @@ export class AppComponent {
     this.electron = electron;
   }
 
+  cleanResult() {
+    this.result = '';
+  }
+
+  addResult(line) {
+    this.result += line + '\n';
+  }
+
   runCode(code) {
     this.terminate();
 
     this.worker = new Worker('./assets/app.worker.js');
-    this.result = '';
+    this.cleanResult();
 
     this.worker.onmessage = ({ data }) => {
       const res = JSON.parse(data);
-      console.log(res);
       if (res.finish) {
         console.log('terminate worker');
       } else {
-        this.result += res.data + '\n';
+        this.addResult(res.data);
       }
+    };
+
+    this.worker.onerror = error => {
+      this.addResult(error.message);
     };
 
     this.worker.postMessage(code);
