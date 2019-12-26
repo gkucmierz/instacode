@@ -7,11 +7,11 @@ import { ElectronService } from './services/electron.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  electron: ElectronService;
   worker;
   result = '';
 
-  constructor(electron: ElectronService,
+  constructor(
+    private electron: ElectronService,
     private ref: ChangeDetectorRef) {
     this.electron = electron;
   }

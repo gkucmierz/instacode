@@ -1,10 +1,11 @@
 const {app, BrowserWindow} = require('electron');
 const url = require('url');
 const path = require('path');
-const args = require('args');
 
-args.option('dev', 'Dev mode', false);
-const flags = args.parse(process.argv);
+// const args = require('args');
+// args.option('dev', 'Dev mode', false);
+// const flags = args.parse(process.argv);
+const flags = {dev: process.argv.slice(2).indexOf('--dev') !== -1};
 
 let mainWindow;
 
