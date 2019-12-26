@@ -1,8 +1,26 @@
 /// <reference lib="webworker" />
 
 addEventListener('message', ({ data }) => {
-  const code = new Function(data);
-  const res = (data, finish = false) => {
+  const log = console.log;
+  const getType = obj => ({}).toString.call(obj).slice(8, -1);
+  const res = (arr, finish = false) => {
+    const data = arr.map(obj => {
+      switch (getType(obj)) {
+        case 'Symbol':
+          return obj.toString();
+        case 'BigInt':
+          return `${obj}n`;
+        case 'String':
+          return `"${obj}"`;
+        case 'Number':
+        case 'Boolean':
+        case 'Null':
+        case 'Undefined':
+        case 'Object':
+        default:
+          return obj + '';
+      }
+    }).join` `;
     postMessage(JSON.stringify({finish, data}));
   };
 
@@ -11,9 +29,11 @@ addEventListener('message', ({ data }) => {
   };
 
   try {
+    const code = new Function(data);
     code();
     res([], true);
   } catch (e) {
-    postMessage(e);
+    res([e]);
+    res([], true);
   }
 });

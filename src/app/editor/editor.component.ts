@@ -17,18 +17,7 @@ export class EditorComponent implements OnInit {
   @Output() codeChange = new EventEmitter();
 
   sourceCode = `
-const MAX = 5;
-const date = new Date();
-let cnt = 0;
-while (1) {
-  const tmp = new Date();
-  if (1e3 * cnt <= tmp - date) {
-    console.log('cnt', cnt, +tmp);
-    if (MAX < ++cnt) {
-      break;
-    }
-  }
-}
+console.log(123, 123n, "test", true, null, [][2], {}, Symbol(42), new Date());
 `;
 
   readonly codemirrorOptions = {

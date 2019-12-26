@@ -27,20 +27,11 @@ export class AppComponent {
       if (res.finish) {
         console.log('terminate worker');
       } else {
-        this.result += this.prepareLog(res.data);
+        this.result += res.data + '\n';
       }
     };
 
     this.worker.postMessage(code);
-  }
-
-  prepareLog(arr) {
-    return arr.map(d => {
-      if (typeof d === 'string') {
-        return `"${d}"`;
-      }
-      return d;
-    }).join` ` + '\n';
   }
 
   terminate() {
