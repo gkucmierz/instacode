@@ -10,8 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "electron": "electron . --dev",
     "start:electron": "npm run build:prod && electron .",
-    "run:electron": "electron .",
     "build:electron": "npm run build:prod && electron-builder build"
   },
   "private": true,
@@ -28,6 +28,7 @@
     "@angular/router": "~8.0.1",
     "@ctrl/ngx-codemirror": "^2.2.1",
     "angular-split": "^3.0.2",
+    "args": "^5.0.1",
     "codemirror": "^5.49.2",
     "hammerjs": "^2.0.8",
     "rxjs": "~6.4.0",

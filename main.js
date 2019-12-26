@@ -1,39 +1,49 @@
 const {app, BrowserWindow} = require('electron');
 const url = require('url');
 const path = require('path');
+const args = require('args');
+
+args.option('dev', 'Dev mode', false);
+const flags = args.parse(process.argv);
 
 let mainWindow;
 
-function createWindow () {
+const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    // titleBarStyle: 'hidden',
+    // frame: false,
+    width: 1000,
+    height: 700,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      // nodeIntegrationInWorker: true
     }
-  })
+  });
 
-  mainWindow.loadURL(
-    url.format({
-      pathname: path.join(__dirname, '/dist/instacode/index.html'),
-      protocol: 'file:',
-      slashes: true
-    })
-  );
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  if (flags.dev) {
+    mainWindow.webContents.openDevTools();
+    mainWindow.loadURL('http://localhost:4200');
+  } else {
+    mainWindow.loadURL(
+      url.format({
+        pathname: path.join(__dirname, '/dist/instacode/index.html'),
+        protocol: 'file:',
+        slashes: true
+      })
+    ); 
+  }
 
-  mainWindow.on('closed', function () {
-    mainWindow = null
-  })
-}
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
+};
 
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit()
-})
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit();
+});
 
-app.on('activate', function () {
-  if (mainWindow === null) createWindow()
-})
+app.on('activate', () => {
+  if (mainWindow === null) createWindow();
+});
