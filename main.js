@@ -16,7 +16,7 @@ const createWindow = () => {
     height: 700,
     webPreferences: {
       nodeIntegration: true,
-      // nodeIntegrationInWorker: true
+      nodeIntegrationInWorker: true
     }
   });
 

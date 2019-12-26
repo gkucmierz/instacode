@@ -1,4 +1,7 @@
-import { OnInit, Component, ViewChild } from '@angular/core';
+import {
+  OnInit, Component, ViewChild,
+  Output, EventEmitter
+} from '@angular/core';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
 
 import 'codemirror/mode/javascript/javascript';
@@ -9,27 +12,23 @@ import 'codemirror/mode/javascript/javascript';
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.scss'],
 })
-export class EditorComponent {
+export class EditorComponent implements OnInit {
   @ViewChild('codeEditor', { static: true }) codeEditor: CodemirrorComponent;
+  @Output() codeChange = new EventEmitter();
 
   sourceCode = `
-// https://gist.github.com/gkucmierz/97a36a8ccdb37557cac6af847745e3be
-// play sine wave in browser
-
-const sound = (() => {
-  return {
-    play: (duration = 1e3) => {
-      const context = new AudioContext();
-      const o = context.createOscillator();
-      o.type = 'sine';
-      o.connect(context.destination);
-      o.start();
-      setTimeout(() => o.stop(), duration);
+const MAX = 5;
+const date = new Date();
+let cnt = 0;
+while (1) {
+  const tmp = new Date();
+  if (1e3 * cnt <= tmp - date) {
+    console.log('cnt', cnt, +tmp);
+    if (MAX < ++cnt) {
+      break;
     }
-  };
-})();
-
-setInterval(sound.play, 2e3);
+  }
+}
 `;
 
   readonly codemirrorOptions = {
@@ -50,4 +49,12 @@ setInterval(sound.play, 2e3);
     // mode: 'markdown',
     // mode: 'htmlmixed',
   };
+
+  ngOnInit() {
+    this.codeChange.emit(this.sourceCode);
+  }
+
+  onChange(code) {
+    this.codeChange.emit(code);
+  }
 }

@@ -2,5 +2,6 @@
 <ngx-codemirror
   #codeEditor
   [(ngModel)]="sourceCode"
+  (ngModelChange)="onChange($event)"
   [options]="codemirrorOptions">
 </ngx-codemirror>
