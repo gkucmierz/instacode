@@ -28,12 +28,12 @@ addEventListener('message', ({ data }) => {
     res(args.map(arg => arg));
   };
 
-  // try {
-  const code = new Function(data);
-  code();
-  res([], true);
-  // } catch (e) {
-  //   res([e]);
-  //   res([], true);
-  // }
+  try {
+    const code = new Function(data);
+    code();
+    res([], true);
+  } catch (e) {
+    res([e]);
+    res([], true);
+  }
 });

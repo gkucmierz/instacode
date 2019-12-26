@@ -16,7 +16,7 @@ const createWindow = () => {
     height: 700,
     webPreferences: {
       nodeIntegration: true,
-      nodeIntegrationInWorker: true
+      // nodeIntegrationInWorker: true
     }
   });
 
@@ -46,4 +46,8 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (mainWindow === null) createWindow();
+});
+
+process.on('uncaughtException', error => {
+  console.log(error);
 });

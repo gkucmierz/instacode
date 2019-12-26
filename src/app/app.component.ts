@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { ElectronService } from './services/electron.service';
 
 @Component({
@@ -11,7 +11,8 @@ export class AppComponent {
   worker;
   result = '';
 
-  constructor(electron: ElectronService) {
+  constructor(electron: ElectronService,
+    private ref: ChangeDetectorRef) {
     this.electron = electron;
   }
 
@@ -21,6 +22,9 @@ export class AppComponent {
 
   addResult(line) {
     this.result += line + '\n';
+
+    // electron need this to refresh view
+    this.ref.detectChanges();
   }
 
   runCode(code) {
