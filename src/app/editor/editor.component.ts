@@ -2,6 +2,7 @@ import {
   OnInit, Component, ViewChild,
   Output, EventEmitter
 } from '@angular/core';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
 
 import 'codemirror/mode/javascript/javascript';
@@ -16,12 +17,9 @@ export class EditorComponent implements OnInit {
   @ViewChild('codeEditor', { static: true }) codeEditor: CodemirrorComponent;
   @Output() codeChange = new EventEmitter();
 
-  sourceCode = `
-console.log(123, 123n, "test", true, null, [][2], {}, Symbol(42), new Date());
-`;
+  sourceCode = '';
 
   readonly codemirrorOptions = {
-    value: 'dupa',
     theme: 'monokai',
     autofocus: true,
     viewportMargin: Infinity,
@@ -39,11 +37,20 @@ console.log(123, 123n, "test", true, null, [][2], {}, Symbol(42), new Date());
     // mode: 'htmlmixed',
   };
 
+  constructor(private storage: StorageMap) {}
+
   ngOnInit() {
     this.codeChange.emit(this.sourceCode);
+
+    this.storage.get('code').subscribe(code => {
+      if (typeof code !== 'undefined') {
+        this.sourceCode = code + '';
+      }
+    });
   }
 
   onChange(code) {
     this.codeChange.emit(code);
+    this.storage.set('code', this.sourceCode).subscribe();
   }
 }
