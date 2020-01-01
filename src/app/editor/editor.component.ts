@@ -46,6 +46,7 @@ export class EditorComponent implements OnInit {
       if (typeof code !== 'undefined') {
         this.sourceCode = code + '';
       }
+      this.codeChange.emit(this.sourceCode);
     });
   }
 
