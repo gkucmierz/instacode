@@ -5,9 +5,6 @@ import {
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
 
-import 'codemirror/mode/javascript/javascript';
-// import 'codemirror/mode/markdown/markdown';
-
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
@@ -17,24 +14,40 @@ export class EditorComponent implements OnInit {
   @ViewChild('codeEditor', { static: true }) codeEditor: CodemirrorComponent;
   @Output() codeChange = new EventEmitter();
 
-  sourceCode = '';
+  sourceCode = `
+// https://gist.github.com/gkucmierz/d3a164336a7f7f2326c8d83dff845c9b
+const bijectiveBinary = {
+  convertToInt: s => parseInt('1'+s.replace(/./g,d=>(+d)-1), 2) - 1,
+  convertFromInt: i => (i+1).toString(2).substr(1).replace(/./g,d=>(+d)+1)
+};
+
+for (let i = 0; i < 1e3; ++i) {
+  console.log(
+    i,
+    bijectiveBinary.convertFromInt(i)
+  );
+}
+`;
 
   readonly codemirrorOptions = {
     theme: 'monokai',
+    mode: 'text/typescript',
+    keyMap: 'sublime',
+    tabSize: 2,
+    indentWithTabs: false,
+    lineWrapping: false,
+
     autofocus: true,
     viewportMargin: Infinity,
     indentUnit: 2,
     smartIndent: true,
-    tabSize: 4,
-    indentWithTabs: false,
-    lineWrapping: false,
     lineNumbers: true,
     lineNumberFormatter: ln => `${ln}`,
     fixedGutter: true,
     scrollbarStyle: 'null',
-    mode: 'text/typescript',
-    // mode: 'markdown',
-    // mode: 'htmlmixed',
+
+    styleActiveLine: true,
+    matchbrackets: true,
   };
 
   constructor(private storage: StorageMap) {}
@@ -43,7 +56,7 @@ export class EditorComponent implements OnInit {
     this.codeChange.emit(this.sourceCode);
 
     this.storage.get('code').subscribe(code => {
-      if (typeof code !== 'undefined') {
+      if (code) {
         this.sourceCode = code + '';
       }
       this.codeChange.emit(this.sourceCode);
