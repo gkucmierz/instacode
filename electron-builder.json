@@ -18,19 +18,19 @@
     "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
   ],
   "win": {
-    "icon": "dist/instacode/assets",
+    "icon": "dist/instacode/assets/icons",
     "target": [
       "portable"
     ]
   },
   "mac": {
-    "icon": "dist/instacode/assets",
+    "icon": "dist/instacode/assets/icons",
     "target": [
       "dmg"
     ]
   },
   "linux": {
-    "icon": "dist/instacode/assets",
+    "icon": "dist/instacode/assets/icons",
     "target": [
       "AppImage"
     ]
