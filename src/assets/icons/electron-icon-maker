@@ -1,0 +1,3 @@
+electron-icon-maker
+
+./node_modules/.bin/electron-icon-maker --input=iconfinder_21_icons_2191531.png --output=src/assets
