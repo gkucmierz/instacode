@@ -1,5 +1,6 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { ElectronService } from './services/electron.service';
+import { ResultComponent } from './result/result.component';
 
 @Component({
   selector: 'app-root',
@@ -7,24 +8,23 @@ import { ElectronService } from './services/electron.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  worker;
-  result = '';
+  @ViewChild('resultCmp', {static: true}) resultCmp: ResultComponent;
+  worker: Worker;
 
   constructor(
     private electron: ElectronService,
-    private ref: ChangeDetectorRef) {
+    private changeDetector: ChangeDetectorRef) {
     this.electron = electron;
   }
 
   cleanResult() {
-    this.result = '';
+    this.resultCmp.clean();
   }
 
   addResult(line) {
-    this.result += line + '\n';
-
+    this.resultCmp.addLine(line);
     // electron need this to refresh view
-    this.ref.detectChanges();
+    this.changeDetector.detectChanges();
   }
 
   runCode(code) {
@@ -35,10 +35,9 @@ export class AppComponent {
 
     this.worker.onmessage = ({ data }) => {
       const res = JSON.parse(data);
+      this.addResult(res.data);
       if (res.finish) {
-        console.log('terminate worker');
-      } else {
-        this.addResult(res.data);
+        this.terminate();
       }
     };
 

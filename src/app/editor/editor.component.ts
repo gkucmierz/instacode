@@ -15,17 +15,15 @@ export class EditorComponent implements OnInit {
   @Output() codeChange = new EventEmitter();
 
   sourceCode = `
-// https://gist.github.com/gkucmierz/d3a164336a7f7f2326c8d83dff845c9b
-const bijectiveBinary = {
-  convertToInt: s => parseInt('1'+s.replace(/./g,d=>(+d)-1), 2) - 1,
-  convertFromInt: i => (i+1).toString(2).substr(1).replace(/./g,d=>(+d)+1)
-};
+const delay = 10;
+let time = new Date() - delay;
 
-for (let i = 0; i < 1e3; ++i) {
-  console.log(
-    i,
-    bijectiveBinary.convertFromInt(i)
-  );
+for (let i = 0; i < 1e7; ++i) {
+  const now = new Date();
+  if (now - delay > time) {
+    console.log(+time, i);
+    time = now;
+  }
 }
 `;
 
