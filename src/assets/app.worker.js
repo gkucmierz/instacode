@@ -1,26 +1,31 @@
 /// <reference lib="webworker" />
 
+let res;
 const log = console.log;
-const getType = obj => ({}).toString.call(obj).slice(8, -1);
+console.log = (...args) => res(args);
 
 const postMessageThrottled = (() => {
-  const NEXT_TICK = 0;
+  const pm = postMessage;
+  postMessage = _ => _;
   const updateFreq = 20; // times per sec
   const updateDelay = 1e3 / updateFreq;
-  const dataCache = [];
+  let dataCache = [];
   let lastUpdate = +new Date();
 
   return (data, finish) => {
-    dataCache.push(data);
     const now = +new Date();
+    if (data !== '') {
+      dataCache.push(data); 
+    }
     if (lastUpdate + updateDelay <= now || finish) {
-      postMessage(JSON.stringify({finish, data: dataCache.join`\n`}));
-      dataCache.length = 0;
+      pm(JSON.stringify({finish, data: dataCache.join`\n`}));
+      dataCache = [];
     }
   };
 })();
 
-const res = (arr, finish = false) => {
+res = (arr, finish = false) => {
+  const getType = obj => ({}).toString.call(obj).slice(8, -1);
   const data = arr.map(obj => {
     switch (getType(obj)) {
       case 'Symbol':
@@ -39,10 +44,6 @@ const res = (arr, finish = false) => {
     }
   }).join` `;
   postMessageThrottled(data, finish);
-};
-
-console.log = (...args) => {
-  res(args.map(arg => arg));
 };
 
 addEventListener('message', ({ data }) => {

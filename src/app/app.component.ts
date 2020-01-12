@@ -22,9 +22,11 @@ export class AppComponent {
   }
 
   addResult(line) {
-    this.resultCmp.addLine(line);
-    // electron need this to refresh view
-    this.changeDetector.detectChanges();
+    setTimeout(() => {
+      // electron need this to refresh view
+      this.changeDetector.detectChanges();
+    }, 0);
+    return this.resultCmp.addLine(line);
   }
 
   runCode(code) {
@@ -35,8 +37,9 @@ export class AppComponent {
 
     this.worker.onmessage = ({ data }) => {
       const res = JSON.parse(data);
-      this.addResult(res.data);
-      if (res.finish) {
+
+      const error = !this.addResult(res.data);
+      if (res.finish || error) {
         this.terminate();
       }
     };
