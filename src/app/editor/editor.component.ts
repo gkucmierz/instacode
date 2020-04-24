@@ -15,16 +15,11 @@ export class EditorComponent implements OnInit {
   @Output() codeChange = new EventEmitter();
 
   sourceCode = `
-const delay = 10;
-let time = new Date() - delay;
 
-for (let i = 0; i < 1e7; ++i) {
-  const now = new Date();
-  if (now - delay > time) {
-    console.log(+time, i);
-    time = now;
-  }
+for (let i = 0; i < 40; ++i) {
+  console.log(i);
 }
+
 `;
 
   readonly codemirrorOptions = {
