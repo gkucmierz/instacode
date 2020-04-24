@@ -32,16 +32,11 @@ export class AppComponent {
   runCode(code) {
     this.terminate();
 
-    this.worker = new Worker('./assets/app.worker.js');
+    this.worker = new Worker('./app.worker', { type: 'module' });
     this.cleanResult();
 
     this.worker.onmessage = ({ data }) => {
-      const res = JSON.parse(data);
-
-      const error = !this.addResult(res.data);
-      if (res.finish || error) {
-        this.terminate();
-      }
+      this.addResult(data);
     };
 
     this.worker.onerror = error => {
