@@ -1,6 +1,6 @@
 {
   "name": "instacode",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "main.js",
   "scripts": {
     "ng": "ng",
@@ -36,15 +36,17 @@
     "angular-split": "^3.0.2",
     "codemirror": "^5.49.2",
     "hammerjs": "^2.0.8",
+    "javascript-stringify": "^2.0.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.803.21",
+    "@angular-devkit/build-angular": "^0.803.24",
     "@angular/cli": "~8.0.3",
     "@angular/compiler-cli": "~8.0.1",
     "@angular/language-service": "~8.0.1",
+    "@babel/compat-data": "~7.8.0",
     "@types/codemirror": "0.0.81",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",

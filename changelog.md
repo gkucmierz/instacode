@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2020-04-25
+### Fixed
+- Avoid memory leaks in case of much output data
+### Changed
+- Better Output stringify
+
 ## [1.0.1] - 2020-01-12
 ### Fixed
 - Throttle data posted from webworker to avoid interface blocking.
