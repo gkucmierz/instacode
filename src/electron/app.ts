@@ -1,6 +1,10 @@
+
 const {app, BrowserWindow} = require('electron');
 const url = require('url');
 const path = require('path');
+
+// import { MAX_DATA_SIZE } from '../app/app.config';
+// console.log(MAX_DATA_SIZE);
 
 // const args = require('args');
 // args.option('dev', 'Dev mode', false);
@@ -32,7 +36,7 @@ const createWindow = () => {
         protocol: 'file:',
         slashes: true
       })
-    ); 
+    );
   }
 
   mainWindow.on('closed', () => {
@@ -43,11 +47,15 @@ const createWindow = () => {
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
 });
 
 app.on('activate', () => {
-  if (mainWindow === null) createWindow();
+  if (mainWindow === null) {
+    createWindow();
+  }
 });
 
 process.on('uncaughtException', error => {
