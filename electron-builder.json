@@ -1,10 +1,11 @@
 {
-  "productName": "instacode",
+  "appId": "com.electron.${name}",
+  "productName": "Instacode",
   "directories": {
     "output": "release/"
   },
   "files": [
-    "**/*",
+    "src/electron/**/*",
     "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
     "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
     "!**/node_modules/*.d.ts",

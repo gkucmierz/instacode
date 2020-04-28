@@ -1,9 +1,8 @@
 import {
-  OnInit, Component, ViewChild,
-  Output, EventEmitter
+  OnInit, Component, ViewChild
 } from '@angular/core';
-import { StorageMap } from '@ngx-pwa/local-storage';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
+import { CodeService } from '../services/code.service';
 
 @Component({
   selector: 'app-editor',
@@ -12,15 +11,7 @@ import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
 })
 export class EditorComponent implements OnInit {
   @ViewChild('codeEditor', { static: true }) codeEditor: CodemirrorComponent;
-  @Output() codeChange = new EventEmitter();
-
-  sourceCode = `
-
-for (let i = 0; i < 40; ++i) {
-  console.log(i);
-}
-
-`;
+  sourceCode = '';
 
   readonly codemirrorOptions = {
     theme: 'monokai',
@@ -43,21 +34,15 @@ for (let i = 0; i < 40; ++i) {
     matchbrackets: true,
   };
 
-  constructor(private storage: StorageMap) {
-    this.codeChange.emit(this.sourceCode);
-
-    this.storage.get('code').subscribe(code => {
-      if (code) {
-        this.sourceCode = code + '';
-      }
-      this.codeChange.emit(this.sourceCode);
+  constructor(private code: CodeService) {
+    code.get().subscribe(sourceCode => {
+      this.sourceCode = sourceCode;
     });
   }
 
   ngOnInit() { }
 
   onChange(code) {
-    this.codeChange.emit(code);
-    this.storage.set('code', this.sourceCode).subscribe();
+    this.code.set(code);
   }
 }

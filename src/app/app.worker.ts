@@ -26,15 +26,35 @@ const throttledPM = (() => {
   let dataCache = [];
   let lastUpdate = +new Date() - updateDelay;
 
+<<<<<<< HEAD
   return (data, finish = false) => {
     const now = +new Date();
     dataCache.push(data);
+=======
+  return (data, finish = false, tryAgain = true) => {
+    const now = +new Date();
+    if (typeof data !== 'undefined') {
+      dataCache.push(data);
+    }
+>>>>>>> web-app
 
     if (lastUpdate + updateDelay <= now || finish) {
       pm(limitData(dataCache.join('\n')));
       lastUpdate = now;
       dataCache = [];
     }
+<<<<<<< HEAD
+=======
+
+    if (tryAgain) {
+      const nextTick = fn => setTimeout(fn, 0);
+      const tryAgainFn = _ => throttledPM([][0], false, false);
+      // try push data asap
+      setTimeout(tryAgainFn, 0);
+      // try push possibly cached data for async code
+      setTimeout(tryAgainFn, updateDelay);
+    }
+>>>>>>> web-app
   };
 })();
 
@@ -52,9 +72,12 @@ addEventListener('message', ({ data }) => {
   try {
     const code = new Function(data);
     code();
+<<<<<<< HEAD
     const nextTick = fn => setTimeout(fn, 0);
     // push data, that possibly waits (for sync code)
     nextTick(_ => throttledPM('', true));
+=======
+>>>>>>> web-app
   } catch (e) {
     console.error(e);
   }

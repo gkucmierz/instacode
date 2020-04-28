@@ -1,5 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component, OnInit, Input, ChangeDetectorRef
+} from '@angular/core';
 import { MAX_DATA_SIZE, ERROR_MAX_DATA_SIZE } from '../app.config';
+import { OutputService } from '../services/output.service';
 
 @Component({
   selector: 'app-result',
@@ -7,11 +10,25 @@ import { MAX_DATA_SIZE, ERROR_MAX_DATA_SIZE } from '../app.config';
   styleUrls: ['./result.component.scss']
 })
 export class ResultComponent implements OnInit {
-  result: string;
-  visibleResult: string;
+  result = '';
+  visibleResult = '';
   limitReached = false;
 
-  constructor() { }
+  constructor(
+    private output: OutputService,
+    private ref: ChangeDetectorRef) { }
+
+  ngOnInit() {
+    this.output.get().subscribe(({clean, data}) => {
+      if (clean) {
+        this.clean();
+      }
+      if (data) {
+        this.addLine(data);
+      }
+      this.ref.detectChanges();
+    });
+  }
 
   clean() {
     this.result = '';
@@ -34,9 +51,6 @@ export class ResultComponent implements OnInit {
       this.visibleResult += `${this.result.slice(0, MAX_DATA_SIZE)}\n\n${ERROR_MAX_DATA_SIZE}`;
       return false;
     }
-  }
-
-  ngOnInit() {
   }
 
 }

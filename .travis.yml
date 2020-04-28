@@ -16,12 +16,20 @@ script:
   - npm run build:electron
 deploy:
   provider: releases
+<<<<<<< HEAD
   api_key: $GITHUB_TOKEN
+=======
+  api_key: "$GITHUB_OAUTH_TOKEN"
+>>>>>>> web-app
   file_glob: true
   draft: false
   file:
     - "release/*.dmg"
     - "release/*.dmg.blockmap"
+<<<<<<< HEAD
   name: instacode $(date +'%d.%m.%Y %R')
+=======
+  name: Build $(date +'%d.%m.%Y %R')
+>>>>>>> web-app
   on:
     branch: master
