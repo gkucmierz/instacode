@@ -11,7 +11,6 @@ import { CodeService } from '../services/code.service';
 })
 export class EditorComponent implements OnInit {
   @ViewChild('codeEditor', { static: true }) codeEditor: CodemirrorComponent;
-
   sourceCode = '';
 
   readonly codemirrorOptions = {
