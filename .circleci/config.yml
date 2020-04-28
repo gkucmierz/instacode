@@ -1,0 +1,56 @@
+version: 2.1
+orbs:
+  firebase-deploy: azdevs/firebase-deploy@1.0.0
+jobs:
+  build:
+    docker:
+      - image: 'circleci/node:lts'
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Install dependencies
+          command: npm install
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Linting
+          command: npm run lint
+      - run:
+          name: Building
+          command: npm run build:prod
+      - save_cache:
+          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - dist
+            - package.json
+            - firebase.json
+            - .firebaserc
+  deploy:
+    docker:
+      - image: 'circleci/node:lts'
+    working_directory: ~/project
+    steps:
+      - run:
+          name: Show current branch
+          command: echo ${CIRCLE_BRANCH}
+      - restore_cache:
+          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Install Firebase
+          command: npm install --save-dev firebase-tools
+      - run:
+          name: Deploy Master to Firebase
+          command: npm run firebase:deploy
+
+workflows:
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build

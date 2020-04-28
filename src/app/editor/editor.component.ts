@@ -1,9 +1,9 @@
 import {
-  OnInit, Component, ViewChild,
-  Output, EventEmitter
+  OnInit, Component, ViewChild
 } from '@angular/core';
-import { StorageMap } from '@ngx-pwa/local-storage';
+import { ActivatedRoute } from '@angular/router';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
+import { CodeService } from '../services/code.service';
 
 @Component({
   selector: 'app-editor',
@@ -12,15 +12,8 @@ import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
 })
 export class EditorComponent implements OnInit {
   @ViewChild('codeEditor', { static: true }) codeEditor: CodemirrorComponent;
-  @Output() codeChange = new EventEmitter();
-
-  sourceCode = `
-
-for (let i = 0; i < 40; ++i) {
-  console.log(i);
-}
-
-`;
+  sourceCode = '';
+  fromHash = false;
 
   readonly codemirrorOptions = {
     theme: 'monokai',
@@ -43,21 +36,30 @@ for (let i = 0; i < 40; ++i) {
     matchbrackets: true,
   };
 
-  constructor(private storage: StorageMap) {}
+  constructor(
+    private code: CodeService,
+    private route: ActivatedRoute) {
 
-  ngOnInit() {
-    this.codeChange.emit(this.sourceCode);
-
-    this.storage.get('code').subscribe(code => {
-      if (code) {
-        this.sourceCode = code + '';
+    code.get().subscribe(sourceCode => {
+      if (!this.fromHash) {
+        this.sourceCode = sourceCode;
+        this.fromHash = false;
       }
-      this.codeChange.emit(this.sourceCode);
+    });
+
+    route.fragment.subscribe((fragment: string) => {
+      try {
+        if (fragment !== '') {
+          code.set(atob(fragment));
+          this.fromHash = true;
+        }
+      } catch (e) { }
     });
   }
 
+  ngOnInit() { }
+
   onChange(code) {
-    this.codeChange.emit(code);
-    this.storage.set('code', this.sourceCode).subscribe();
+    this.code.set(code);
   }
 }

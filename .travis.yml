@@ -4,7 +4,6 @@ language: node_js
 node_js:
   - '12'
 dist: xenial
-sudo: required
 services:
   - xvfb
 before_script:
@@ -17,13 +16,20 @@ script:
   - npm run build:electron
 deploy:
   provider: releases
-  api_key:
-    secure: "$GITHUB_OAUTH_TOKEN"
+<<<<<<< HEAD
+  api_key: $GITHUB_TOKEN
+=======
+  api_key: "$GITHUB_OAUTH_TOKEN"
+>>>>>>> web-app
   file_glob: true
+  draft: false
   file:
     - "release/*.dmg"
     - "release/*.dmg.blockmap"
-  skip_cleanup: true
+<<<<<<< HEAD
+  name: instacode $(date +'%d.%m.%Y %R')
+=======
   name: Build $(date +'%d.%m.%Y %R')
+>>>>>>> web-app
   on:
     branch: master
