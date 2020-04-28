@@ -1,8 +1,10 @@
 import {
-  OnInit, Component, ViewChild
+  OnInit, Component, ViewChild, ChangeDetectorRef
 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
 import { CodeService } from '../services/code.service';
+import { merge } from 'rxjs';
 
 @Component({
   selector: 'app-editor',
@@ -12,6 +14,7 @@ import { CodeService } from '../services/code.service';
 export class EditorComponent implements OnInit {
   @ViewChild('codeEditor', { static: true }) codeEditor: CodemirrorComponent;
   sourceCode = '';
+  fromHash = false;
 
   readonly codemirrorOptions = {
     theme: 'monokai',
@@ -34,13 +37,33 @@ export class EditorComponent implements OnInit {
     matchbrackets: true,
   };
 
-  constructor(private code: CodeService) {
-    code.get().subscribe(sourceCode => {
-      this.sourceCode = sourceCode;
+  constructor(
+    private code: CodeService,
+    private route: ActivatedRoute,
+    private ref: ChangeDetectorRef) { }
+
+  ngOnInit() {
+    this.code.get().subscribe(sourceCode => {
+      if (!this.fromHash && sourceCode !== this.sourceCode) {
+        this.sourceCode = sourceCode;
+        this.fromHash = false;
+        this.ref.detectChanges();
+      }
+    });
+
+    this.route.fragment.subscribe((fragment: string) => {
+      try {
+        if (typeof fragment === 'string' && fragment !== '') {
+          const code = atob(fragment);
+          console.log(typeof fragment, fragment, code);
+          this.code.set(code);
+          this.fromHash = true;
+          this.sourceCode = code;
+          this.ref.detectChanges();
+        }
+      } catch (e) { }
     });
   }
-
-  ngOnInit() { }
 
   onChange(code) {
     this.code.set(code);
