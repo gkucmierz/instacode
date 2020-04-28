@@ -1,6 +1,7 @@
 import {
   OnInit, Component, ViewChild
 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
 import { CodeService } from '../services/code.service';
 
@@ -12,6 +13,7 @@ import { CodeService } from '../services/code.service';
 export class EditorComponent implements OnInit {
   @ViewChild('codeEditor', { static: true }) codeEditor: CodemirrorComponent;
   sourceCode = '';
+  fromHash = false;
 
   readonly codemirrorOptions = {
     theme: 'monokai',
@@ -34,9 +36,24 @@ export class EditorComponent implements OnInit {
     matchbrackets: true,
   };
 
-  constructor(private code: CodeService) {
+  constructor(
+    private code: CodeService,
+    private route: ActivatedRoute) {
+
     code.get().subscribe(sourceCode => {
-      this.sourceCode = sourceCode;
+      if (!this.fromHash) {
+        this.sourceCode = sourceCode;
+        this.fromHash = false;
+      }
+    });
+
+    route.fragment.subscribe((fragment: string) => {
+      try {
+        if (fragment !== '') {
+          code.set(atob(fragment));
+          this.fromHash = true;
+        }
+      } catch (e) { }
     });
   }
 
