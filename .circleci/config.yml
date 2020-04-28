@@ -8,29 +8,45 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: 'v1-npm-{{ checksum "npm.lock" }}'
-      - run: npm install
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Install dependencies
+          command: npm install
       - save_cache:
-          key: 'v1-npm-{{ checksum "yarn.lock" }}'
+          key: v1-dependencies-{{ checksum "package.json" }}
           paths:
-            - ./node_modules
-      - run: npm build:prod
-      - persist_to_workspace:
-          root: /tmp/workspace
+            - node_modules
+      - run:
+          name: Linting
+          command: npm run lint
+      - run:
+          name: Building
+          command: npm run build:prod
+      - save_cache:
+          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - dist
+            - package.json
             - firebase.json
             - .firebaserc
-            - firestore.rules
-            - firestore.indexes.json
   deploy:
     docker:
       - image: 'circleci/node:lts'
+    working_directory: ~/project
     steps:
-      - attach_workspace:
-          at: /tmp/workspace
-      - firebase-deploy/deploy:
-          token: $FIREBASE_DEPLOY_TOKEN
+      - run:
+          name: Show current branch
+          command: echo ${CIRCLE_BRANCH}
+      - restore_cache:
+          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Install Firebase
+          command: npm install --save-dev firebase-tools
+      - run:
+          name: Deploy Master to Firebase
+          command: npm run firebase:deploy
+
 workflows:
   build-and-deploy:
     jobs:

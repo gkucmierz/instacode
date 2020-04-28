@@ -12,7 +12,8 @@
     "e2e": "ng e2e",
     "electron": "electron . --dev",
     "start:electron": "npm run build:prod && electron .",
-    "build:electron": "npm run build:prod && electron-builder build"
+    "build:electron": "npm run build:prod && electron-builder build",
+    "firebase:deploy": "firebase deploy --token ${FIREBASE_DEPLOY_TOKEN}"
   },
   "husky": {
     "hooks": {
