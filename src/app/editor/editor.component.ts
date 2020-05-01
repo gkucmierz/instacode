@@ -1,9 +1,10 @@
 import {
-  OnInit, Component, ViewChild
+  OnInit, Component, ViewChild, ChangeDetectorRef
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
 import { CodeService } from '../services/code.service';
+import { merge } from 'rxjs';
 
 @Component({
   selector: 'app-editor',
@@ -38,26 +39,31 @@ export class EditorComponent implements OnInit {
 
   constructor(
     private code: CodeService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private ref: ChangeDetectorRef) { }
 
-    code.get().subscribe(sourceCode => {
-      if (!this.fromHash) {
+  ngOnInit() {
+    this.code.get().subscribe(sourceCode => {
+      if (!this.fromHash && sourceCode !== this.sourceCode) {
         this.sourceCode = sourceCode;
         this.fromHash = false;
+        this.ref.detectChanges();
       }
     });
 
-    route.fragment.subscribe((fragment: string) => {
+    this.route.fragment.subscribe((fragment: string) => {
       try {
-        if (fragment !== '') {
-          code.set(atob(fragment));
+        if (typeof fragment === 'string' && fragment !== '') {
+          const code = atob(fragment);
+          console.log(typeof fragment, fragment, code);
+          this.code.set(code);
           this.fromHash = true;
+          this.sourceCode = code;
+          this.ref.detectChanges();
         }
       } catch (e) { }
     });
   }
-
-  ngOnInit() { }
 
   onChange(code) {
     this.code.set(code);
