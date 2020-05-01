@@ -16,7 +16,7 @@ export enum CodePriority {
 export class CodeService {
   subject = new BehaviorSubject<string>('');
   worker: Worker;
-  priority: number;
+  priority = Infinity;
 
   constructor(
     private storage: StorageMap,
@@ -36,13 +36,14 @@ for (let i = 0; i < 40; ++i) {
   }
 
   set(code, priority) {
-    if (priority < this.priority) {
-      return false;
+    if (priority <= this.priority) {
+      this.priority = priority;
+      this.run(code);
+      this.subject.next(code);
+      this.storage.set('code', code).subscribe();
+      return true;
     }
-    this.run(code);
-    this.subject.next(code);
-    this.storage.set('code', code).subscribe();
-    return true;
+    return false;
   }
 
   get() {

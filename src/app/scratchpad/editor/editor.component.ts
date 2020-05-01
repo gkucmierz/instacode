@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
-import { CodeService, CodePriority } from '../services/code.service';
+import { CodeService, CodePriority } from '../../services/code.service';
 import { merge } from 'rxjs';
 import { SubSink } from 'subsink';
 

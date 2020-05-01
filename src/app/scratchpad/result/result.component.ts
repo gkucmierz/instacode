@@ -1,8 +1,8 @@
 import {
   Component, OnInit, OnDestroy, Input, ChangeDetectorRef
 } from '@angular/core';
-import { MAX_DATA_SIZE, ERROR_MAX_DATA_SIZE } from '../app.config';
-import { OutputService } from '../services/output.service';
+import { MAX_DATA_SIZE, ERROR_MAX_DATA_SIZE } from '../../app.config';
+import { OutputService } from '../../services/output.service';
 import { SubSink } from 'subsink';
 
 @Component({
