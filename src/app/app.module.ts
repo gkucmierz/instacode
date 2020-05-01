@@ -15,6 +15,7 @@ import { ScratchpadComponent } from './scratchpad/scratchpad.component';
 import { EditorComponent } from './scratchpad/editor/editor.component';
 import { ResultComponent } from './scratchpad/result/result.component';
 import { HomeComponent } from './home/home.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { HomeComponent } from './home/home.component';
     EditorComponent,
     ResultComponent,
     HomeComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
