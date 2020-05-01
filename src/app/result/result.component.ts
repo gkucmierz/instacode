@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, Input, ChangeDetectorRef
+  Component, OnInit, OnDestroy, Input, ChangeDetectorRef
 } from '@angular/core';
 import { MAX_DATA_SIZE, ERROR_MAX_DATA_SIZE } from '../app.config';
 import { OutputService } from '../services/output.service';
@@ -9,7 +9,8 @@ import { OutputService } from '../services/output.service';
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.scss']
 })
-export class ResultComponent implements OnInit {
+export class ResultComponent implements OnInit, OnDestroy {
+  private subs = new SubSink();
   result = '';
   visibleResult = '';
   limitReached = false;
@@ -19,7 +20,7 @@ export class ResultComponent implements OnInit {
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.output.get().subscribe(({clean, data}) => {
+    this.subs = this.output.get().subscribe(({clean, data}) => {
       if (clean) {
         this.clean();
       }
@@ -28,6 +29,10 @@ export class ResultComponent implements OnInit {
       }
       this.ref.detectChanges();
     });
+  }
+
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
 
   clean() {

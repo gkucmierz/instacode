@@ -1,5 +1,5 @@
 import {
-  OnInit, Component, ViewChild, ChangeDetectorRef
+  OnInit, OnDestroy, Component, ViewChild, ChangeDetectorRef
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
@@ -11,8 +11,9 @@ import { merge } from 'rxjs';
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.scss'],
 })
-export class EditorComponent implements OnInit {
+export class EditorComponent implements OnInit, OnDestroy {
   @ViewChild('codeEditor', { static: true }) codeEditor: CodemirrorComponent;
+  private subs = new SubSink();
   sourceCode = '';
   fromHash = false;
 
@@ -43,7 +44,7 @@ export class EditorComponent implements OnInit {
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.code.get().subscribe(sourceCode => {
+    this.subs = this.code.get().subscribe(sourceCode => {
       if (!this.fromHash && sourceCode !== this.sourceCode) {
         this.sourceCode = sourceCode;
         this.fromHash = false;
@@ -51,7 +52,7 @@ export class EditorComponent implements OnInit {
       }
     });
 
-    this.route.fragment.subscribe((fragment: string) => {
+    this.subs = this.route.fragment.subscribe((fragment: string) => {
       try {
         if (typeof fragment === 'string' && fragment !== '') {
           const code = atob(fragment);
@@ -63,6 +64,10 @@ export class EditorComponent implements OnInit {
         }
       } catch (e) { }
     });
+  }
+
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
 
   onChange(code) {
