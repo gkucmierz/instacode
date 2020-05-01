@@ -5,4 +5,8 @@ pre {
   margin: 0;
   padding: 10px;
   height: calc(100% - 20px);
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+  line-height: normal;
 }

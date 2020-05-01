@@ -3,6 +3,7 @@ import {
 } from '@angular/core';
 import { MAX_DATA_SIZE, ERROR_MAX_DATA_SIZE } from '../app.config';
 import { OutputService } from '../services/output.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-result',
@@ -20,7 +21,7 @@ export class ResultComponent implements OnInit, OnDestroy {
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.subs = this.output.get().subscribe(({clean, data}) => {
+    this.subs.sink = this.output.get().subscribe(({clean, data}) => {
       if (clean) {
         this.clean();
       }

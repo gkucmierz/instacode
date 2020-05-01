@@ -3,8 +3,9 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
-import { CodeService } from '../services/code.service';
+import { CodeService, CodePriority } from '../services/code.service';
 import { merge } from 'rxjs';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-editor',
@@ -44,25 +45,12 @@ export class EditorComponent implements OnInit, OnDestroy {
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.subs = this.code.get().subscribe(sourceCode => {
+    this.subs.sink = this.code.get().subscribe(sourceCode => {
       if (!this.fromHash && sourceCode !== this.sourceCode) {
         this.sourceCode = sourceCode;
         this.fromHash = false;
         this.ref.detectChanges();
       }
-    });
-
-    this.subs = this.route.fragment.subscribe((fragment: string) => {
-      try {
-        if (typeof fragment === 'string' && fragment !== '') {
-          const code = atob(fragment);
-          console.log(typeof fragment, fragment, code);
-          this.code.set(code);
-          this.fromHash = true;
-          this.sourceCode = code;
-          this.ref.detectChanges();
-        }
-      } catch (e) { }
     });
   }
 
@@ -71,6 +59,6 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   onChange(code) {
-    this.code.set(code);
+    this.code.set(code, CodePriority.USER_INPUT);
   }
 }

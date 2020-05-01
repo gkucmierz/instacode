@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WindowRefService } from './window-ref.service';
-
-// If you import a module but never use any of the imported values other than as TypeScript types,
-// the resulting javascript file will look as if you never imported the module at all.
+import { Router } from '@angular/router';
 import { ipcRenderer, webFrame, remote } from 'electron';
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
@@ -22,7 +20,10 @@ export class ElectronService {
     return this.window && this.window.process && this.window.process.type && true || false;
   }
 
-  constructor(windowRef: WindowRefService) {
+  constructor(
+    private windowRef: WindowRefService,
+    private router: Router) {
+
     this.window = windowRef.window;
 
     // Conditional imports
@@ -33,6 +34,15 @@ export class ElectronService {
 
       this.childProcess = window.require('child_process');
       this.fs = window.require('fs');
+      this.init();
     }
+  }
+
+  init() {
+    // this.ipcRenderer.send('asynchronous-message', 'ping');
+
+    this.ipcRenderer.on('redirect' , (event, data) => {
+      this.router.navigateByUrl(data);
+    });
   }
 }

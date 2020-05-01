@@ -3,12 +3,20 @@ import { BehaviorSubject } from 'rxjs';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { OutputService } from './output.service';
 
+export enum CodePriority {
+  USER_INPUT = 1,
+  URL = 2,
+  STORAGE = 3,
+  PREDEFINED = 4,
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class CodeService {
   subject = new BehaviorSubject<string>('');
   worker: Worker;
+  priority: number;
 
   constructor(
     private storage: StorageMap,
@@ -16,7 +24,7 @@ export class CodeService {
 
     this.storage.get('code').subscribe(code => {
       if (code) {
-        this.set(code);
+        this.set(code, CodePriority.STORAGE);
       }
     });
 
@@ -24,13 +32,17 @@ export class CodeService {
 for (let i = 0; i < 40; ++i) {
   console.log(i);
 }
-`);
+`, CodePriority.PREDEFINED);
   }
 
-  set(code) {
+  set(code, priority) {
+    if (priority < this.priority) {
+      return false;
+    }
     this.run(code);
     this.subject.next(code);
     this.storage.set('code', code).subscribe();
+    return true;
   }
 
   get() {
