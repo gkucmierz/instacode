@@ -45,10 +45,9 @@ export class EditorComponent implements OnInit, OnDestroy {
     private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.subs.sink = this.code.get().subscribe(sourceCode => {
-      if (!this.fromHash && sourceCode !== this.sourceCode) {
-        this.sourceCode = sourceCode;
-        this.fromHash = false;
+    this.subs.sink = this.code.get().subscribe(({code, priority}) => {
+      if (code !== this.sourceCode) {
+        this.sourceCode = code;
         this.ref.detectChanges();
       }
     });

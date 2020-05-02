@@ -10,11 +10,16 @@ export enum CodePriority {
   PREDEFINED = 4,
 }
 
+interface CodePromise {
+  code: string;
+  priority?: CodePriority;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class CodeService {
-  subject = new BehaviorSubject<string>('');
+  subject = new BehaviorSubject<CodePromise>({ code: '' });
   worker: Worker;
   priority = Infinity;
 
@@ -39,7 +44,7 @@ for (let i = 0; i < 40; ++i) {
     if (priority <= this.priority) {
       this.priority = priority;
       this.run(code);
-      this.subject.next(code);
+      this.subject.next({code, priority});
       this.storage.set('code', code).subscribe();
       return true;
     }
