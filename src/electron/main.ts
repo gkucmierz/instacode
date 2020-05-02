@@ -2,6 +2,9 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const url = require('url');
 const path = require('path');
+const fs = require('fs');
+
+require('./menu.ts');
 
 // import { MAX_DATA_SIZE } from '../app/app.config';
 // console.log(MAX_DATA_SIZE);
@@ -20,16 +23,20 @@ ipcMain.on('asynchronous-message', (event, arg) => {
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    // backgroundColor: '#272822',
-    // titleBarStyle: 'hidden',
-    // frame: false,
     width: 1000,
     height: 700,
-    webPreferences: {
-      nodeIntegration: true,
-      // nodeIntegrationInWorker: true
-    }
+    webPreferences: { nodeIntegration: true },
+    show: false,
   });
+
+  const splash = (() => {
+    const splash = new BrowserWindow({width: 220, height: 220, transparent: true, frame: false, alwaysOnTop: true});
+    const splashIcon = fs.readFileSync(
+      path.join(__dirname, '../assets/iconfinder_21_icons_2191531.svg')
+    ).toString('base64');
+    splash.loadURL(`data:image/svg+xml;base64,${splashIcon}`);
+    return splash;
+  })();
 
   if (flags.dev) {
     mainWindow.webContents.openDevTools();
@@ -43,6 +50,11 @@ const createWindow = () => {
       })
     );
   }
+
+  ipcMain.once('web-app-loaded', (event, arg) => {
+    splash.destroy();
+    mainWindow.show();
+  });
 
   mainWindow.webContents.once('dom-ready', () => {
     // redirect to scratchpad route

@@ -38,6 +38,12 @@ export class ElectronService {
     }
   }
 
+  send(event, data) {
+    if (this.isElectron) {
+      this.ipcRenderer.send(event, data);
+    }
+  }
+
   init() {
     // this.ipcRenderer.send('asynchronous-message', 'ping');
 

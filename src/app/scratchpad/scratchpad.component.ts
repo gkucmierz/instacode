@@ -9,7 +9,6 @@ export class ScratchpadComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }
