@@ -10,11 +10,16 @@ export enum CodePriority {
   PREDEFINED = 4,
 }
 
+interface CodePromise {
+  code: string;
+  priority?: CodePriority;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class CodeService {
-  subject = new BehaviorSubject<any>({ code: '' });
+  subject = new BehaviorSubject<CodePromise>({ code: '' });
   worker: Worker;
   priority = Infinity;
 

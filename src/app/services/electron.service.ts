@@ -45,7 +45,7 @@ export class ElectronService {
     // show renderrer window after code from storage is loaded
     if (this.isElectron) {
       code.get().pipe(
-        filter(({_, priority}) => priority <= CodePriority.STORAGE),
+        filter(({priority}) => priority <= CodePriority.STORAGE),
         take(1)
       ).subscribe(_ => {
         setTimeout(() => this.send('web-app-loaded', ''), 0);
