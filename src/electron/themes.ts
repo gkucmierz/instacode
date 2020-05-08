@@ -1,4 +1,6 @@
 
+const { ipcMain } = require('electron');
+
 const themes = require('../themes.json');
 
 function getThemesFromNodeModules() {
@@ -19,14 +21,25 @@ const sanityThemeName = theme => {
   return theme.replace(/\-/g, ' ');
 };
 
-exports.getThemesMenu = mainWindow => {
-  return {
+exports.getThemesMenu = (mainWindow, selectedTheme, refreshMenu) => {
+  const themesMenu = {
     label: 'Themes',
     submenu: themes.filter(({use}) => use).map(({theme}) => {
-      return {
+      const submenu = {
         label: sanityThemeName(theme),
+        type: 'radio',
         click: () => mainWindow.webContents.send('changeTheme', theme)
       };
+      if (selectedTheme === theme) {
+        submenu.checked = true;
+      }
+      return submenu;
     })
   };
+
+  ipcMain.once('changeTheme', (event, theme) => {
+    refreshMenu(theme);
+  });
+
+  return themesMenu;
 };

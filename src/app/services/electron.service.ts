@@ -39,7 +39,7 @@ export class ElectronService {
 
       this.childProcess = window.require('child_process');
       this.fs = window.require('fs');
-      this.init();
+      this.initElectron();
     }
 
     // show renderrer window after code from storage is loaded
@@ -59,15 +59,17 @@ export class ElectronService {
     }
   }
 
-  init() {
-    // this.ipcRenderer.send('asynchronous-message', 'ping');
-
+  initElectron() {
     this.ipcRenderer.on('redirect' , (event, data) => {
       this.router.navigateByUrl(data);
     });
 
     this.ipcRenderer.on('changeTheme' , (event, data) => {
       this.settings.set('theme', data);
+    });
+
+    this.settings.get('theme').subscribe(({value}) => {
+      this.send('changeTheme', value);
     });
   }
 }

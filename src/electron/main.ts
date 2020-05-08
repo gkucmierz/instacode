@@ -17,10 +17,6 @@ let mainWindow;
 
 app.allowRendererProcessReuse = true;
 
-ipcMain.on('asynchronous-message', (event, arg) => {
-  console.log(arg);
-});
-
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 1000,
