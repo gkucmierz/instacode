@@ -1,6 +1,6 @@
 {
   "name": "Instacode",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "src/electron/main.ts",
   "scripts": {
     "ng": "ng",
