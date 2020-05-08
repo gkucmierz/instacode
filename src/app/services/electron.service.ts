@@ -63,5 +63,9 @@ export class ElectronService {
     this.ipcRenderer.on('redirect' , (event, data) => {
       this.router.navigateByUrl(data);
     });
+
+    this.ipcRenderer.on('changeTheme' , (event, data) => {
+      console.log('changeTheme', data);
+    });
   }
 }

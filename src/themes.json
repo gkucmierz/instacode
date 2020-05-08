@@ -1,0 +1,254 @@
+[
+  {
+    "theme": "3024-day",
+    "use": true
+  },
+  {
+    "theme": "3024-night",
+    "use": true
+  },
+  {
+    "theme": "abcdef",
+    "use": true
+  },
+  {
+    "theme": "ambiance-mobile",
+    "use": true
+  },
+  {
+    "theme": "ambiance",
+    "use": true
+  },
+  {
+    "theme": "ayu-dark",
+    "use": true
+  },
+  {
+    "theme": "ayu-mirage",
+    "use": true
+  },
+  {
+    "theme": "base16-dark",
+    "use": true
+  },
+  {
+    "theme": "base16-light",
+    "use": true
+  },
+  {
+    "theme": "bespin",
+    "use": true
+  },
+  {
+    "theme": "blackboard",
+    "use": true
+  },
+  {
+    "theme": "cobalt",
+    "use": true
+  },
+  {
+    "theme": "colorforth",
+    "use": true
+  },
+  {
+    "theme": "darcula",
+    "use": true
+  },
+  {
+    "theme": "dracula",
+    "use": true
+  },
+  {
+    "theme": "duotone-dark",
+    "use": true
+  },
+  {
+    "theme": "duotone-light",
+    "use": true
+  },
+  {
+    "theme": "eclipse",
+    "use": true
+  },
+  {
+    "theme": "elegant",
+    "use": true
+  },
+  {
+    "theme": "erlang-dark",
+    "use": true
+  },
+  {
+    "theme": "gruvbox-dark",
+    "use": true
+  },
+  {
+    "theme": "hopscotch",
+    "use": true
+  },
+  {
+    "theme": "icecoder",
+    "use": true
+  },
+  {
+    "theme": "idea",
+    "use": true
+  },
+  {
+    "theme": "isotope",
+    "use": true
+  },
+  {
+    "theme": "lesser-dark",
+    "use": true
+  },
+  {
+    "theme": "liquibyte",
+    "use": true
+  },
+  {
+    "theme": "lucario",
+    "use": true
+  },
+  {
+    "theme": "material-darker",
+    "use": true
+  },
+  {
+    "theme": "material-ocean",
+    "use": true
+  },
+  {
+    "theme": "material-palenight",
+    "use": true
+  },
+  {
+    "theme": "material",
+    "use": true
+  },
+  {
+    "theme": "mbo",
+    "use": true
+  },
+  {
+    "theme": "mdn-like",
+    "use": true
+  },
+  {
+    "theme": "midnight",
+    "use": true
+  },
+  {
+    "theme": "monokai",
+    "use": true
+  },
+  {
+    "theme": "moxer",
+    "use": true
+  },
+  {
+    "theme": "neat",
+    "use": true
+  },
+  {
+    "theme": "neo",
+    "use": true
+  },
+  {
+    "theme": "night",
+    "use": true
+  },
+  {
+    "theme": "nord",
+    "use": true
+  },
+  {
+    "theme": "oceanic-next",
+    "use": true
+  },
+  {
+    "theme": "panda-syntax",
+    "use": true
+  },
+  {
+    "theme": "paraiso-dark",
+    "use": true
+  },
+  {
+    "theme": "paraiso-light",
+    "use": true
+  },
+  {
+    "theme": "pastel-on-dark",
+    "use": true
+  },
+  {
+    "theme": "railscasts",
+    "use": true
+  },
+  {
+    "theme": "rubyblue",
+    "use": true
+  },
+  {
+    "theme": "seti",
+    "use": true
+  },
+  {
+    "theme": "shadowfox",
+    "use": true
+  },
+  {
+    "theme": "solarized",
+    "use": true
+  },
+  {
+    "theme": "ssms",
+    "use": true
+  },
+  {
+    "theme": "the-matrix",
+    "use": true
+  },
+  {
+    "theme": "tomorrow-night-bright",
+    "use": true
+  },
+  {
+    "theme": "tomorrow-night-eighties",
+    "use": true
+  },
+  {
+    "theme": "ttcn",
+    "use": true
+  },
+  {
+    "theme": "twilight",
+    "use": true
+  },
+  {
+    "theme": "vibrant-ink",
+    "use": true
+  },
+  {
+    "theme": "xq-dark",
+    "use": true
+  },
+  {
+    "theme": "xq-light",
+    "use": true
+  },
+  {
+    "theme": "yeti",
+    "use": true
+  },
+  {
+    "theme": "yonce",
+    "use": true
+  },
+  {
+    "theme": "zenburn",
+    "use": true
+  }
+]
