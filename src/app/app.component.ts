@@ -8,6 +8,9 @@ import { ElectronService } from './services/electron.service';
 })
 export class AppComponent {
 
-  constructor(private electron: ElectronService) { }
+  constructor(private electron: ElectronService) {
+    document.body.classList.add('cm-s-monokai');
+    document.body.classList.add('CodeMirror');
+  }
 
 }
