@@ -1,27 +1,37 @@
 import { Injectable } from '@angular/core';
 import { StorageMap } from '@ngx-pwa/local-storage';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { first, filter } from 'rxjs/operators';
 
 const SETTINGS_STORAGE_KEY = 'settings';
+
+interface PropertyChange {
+  property?: string;
+  value?: any;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
-  subject = new Subject<object>();
+  subject = new BehaviorSubject<PropertyChange>({});
   settings = {};
   saving = false;
   unsaved = false;
 
   constructor(private storage: StorageMap) {
 
+    const emitAll = () => {
+      Object.keys(this.settings).map(key => {
+        this.emit(key, this.settings[key]);
+      });
+    };
+
     this.storage.get(SETTINGS_STORAGE_KEY).subscribe(settings => {
       try {
-        if (settings) {
-          this.settings = JSON.parse(settings);
-        }
-        } catch (e) {}
+        this.settings = JSON.parse(settings + '');
+      } catch (e) {}
+      emitAll();
     });
   }
 
@@ -31,8 +41,12 @@ export class SettingsService {
 
   set(property, value) {
     this.settings[property] = value;
-    this.subject.next({ property, value });
+    this.emit(property, value);
     this.save();
+  }
+
+  emit(property, value) {
+    this.subject.next({ property, value });
   }
 
   private save() {
