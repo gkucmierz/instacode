@@ -4,6 +4,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { CodemirrorComponent } from '@ctrl/ngx-codemirror';
 import { CodeService, CodePriority } from '../../services/code.service';
+import { SettingsService } from '../../services/settings.service';
 import { merge } from 'rxjs';
 import { SubSink } from 'subsink';
 
@@ -18,7 +19,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   sourceCode = '';
   fromHash = false;
 
-  readonly codemirrorOptions = {
+  codemirrorOptions = {
     theme: 'monokai',
     mode: 'text/typescript',
     keyMap: 'sublime',
@@ -42,13 +43,18 @@ export class EditorComponent implements OnInit, OnDestroy {
   constructor(
     private code: CodeService,
     private route: ActivatedRoute,
-    private ref: ChangeDetectorRef) { }
+    private ref: ChangeDetectorRef,
+    private settings: SettingsService) {
+
+    this.subs.sink = settings.get('theme').subscribe(({value}) => {
+      this.codeEditor.codeMirror.setOption('theme', value);
+    });
+  }
 
   ngOnInit() {
-    this.subs.sink = this.code.get().subscribe(sourceCode => {
-      if (!this.fromHash && sourceCode !== this.sourceCode) {
-        this.sourceCode = sourceCode;
-        this.fromHash = false;
+    this.subs.sink = this.code.get().subscribe(({code, priority}) => {
+      if (code !== this.sourceCode) {
+        this.sourceCode = code;
         this.ref.detectChanges();
       }
     });

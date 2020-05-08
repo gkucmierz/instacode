@@ -14,7 +14,7 @@ export enum CodePriority {
   providedIn: 'root'
 })
 export class CodeService {
-  subject = new BehaviorSubject<string>('');
+  subject = new BehaviorSubject<any>({ code: '' });
   worker: Worker;
   priority = Infinity;
 
@@ -39,7 +39,7 @@ for (let i = 0; i < 40; ++i) {
     if (priority <= this.priority) {
       this.priority = priority;
       this.run(code);
-      this.subject.next(code);
+      this.subject.next({code, priority});
       this.storage.set('code', code).subscribe();
       return true;
     }

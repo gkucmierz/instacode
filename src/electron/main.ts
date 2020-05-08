@@ -3,8 +3,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const url = require('url');
 const path = require('path');
 const fs = require('fs');
-
-require('./menu.ts');
+const menu = require('./menu.ts');
 
 // import { MAX_DATA_SIZE } from '../app/app.config';
 // console.log(MAX_DATA_SIZE);
@@ -15,11 +14,8 @@ require('./menu.ts');
 const flags = {dev: process.argv.slice(2).indexOf('--dev') !== -1};
 
 let mainWindow;
-app.allowRendererProcessReuse = true;
 
-ipcMain.on('asynchronous-message', (event, arg) => {
-  console.log(arg);
-});
+app.allowRendererProcessReuse = true;
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
@@ -64,6 +60,8 @@ const createWindow = () => {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+  
+  menu.init(mainWindow);
 };
 
 app.on('ready', createWindow);

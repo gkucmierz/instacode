@@ -3,7 +3,6 @@ import {
 } from '@angular/core';
 import { MAX_DATA_SIZE, ERROR_MAX_DATA_SIZE } from '../../app.config';
 import { OutputService } from '../../services/output.service';
-import { ElectronService } from '../../services/electron.service';
 import { SubSink } from 'subsink';
 
 @Component({
@@ -19,8 +18,7 @@ export class ResultComponent implements OnInit, OnDestroy {
 
   constructor(
     private output: OutputService,
-    private ref: ChangeDetectorRef,
-    private electron: ElectronService) { }
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.subs.sink = this.output.get().subscribe(({clean, data}) => {
@@ -32,8 +30,6 @@ export class ResultComponent implements OnInit, OnDestroy {
       }
       this.ref.detectChanges();
     });
-
-    this.electron.send('web-app-loaded', '');
   }
 
   ngOnDestroy() {
