@@ -14,7 +14,7 @@ export enum CodePriority {
   providedIn: 'root'
 })
 export class CodeService {
-  subject = new BehaviorSubject<string>({ code: '' });
+  subject = new BehaviorSubject<any>({ code: '' });
   worker: Worker;
   priority = Infinity;
 
