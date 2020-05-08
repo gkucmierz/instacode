@@ -9,31 +9,31 @@
   },
   {
     "theme": "abcdef",
-    "use": true
+    "use": false
   },
   {
     "theme": "ambiance-mobile",
-    "use": true
+    "use": false
   },
   {
     "theme": "ambiance",
-    "use": true
+    "use": false
   },
   {
     "theme": "ayu-dark",
-    "use": true
+    "use": false
   },
   {
     "theme": "ayu-mirage",
-    "use": true
+    "use": false
   },
   {
     "theme": "base16-dark",
-    "use": true
+    "use": false
   },
   {
     "theme": "base16-light",
-    "use": true
+    "use": false
   },
   {
     "theme": "bespin",
@@ -49,11 +49,11 @@
   },
   {
     "theme": "colorforth",
-    "use": true
+    "use": false
   },
   {
     "theme": "darcula",
-    "use": true
+    "use": false
   },
   {
     "theme": "dracula",
@@ -73,7 +73,7 @@
   },
   {
     "theme": "elegant",
-    "use": true
+    "use": false
   },
   {
     "theme": "erlang-dark",
@@ -89,7 +89,7 @@
   },
   {
     "theme": "icecoder",
-    "use": true
+    "use": false
   },
   {
     "theme": "idea",
@@ -105,7 +105,7 @@
   },
   {
     "theme": "liquibyte",
-    "use": true
+    "use": false
   },
   {
     "theme": "lucario",
@@ -117,11 +117,11 @@
   },
   {
     "theme": "material-ocean",
-    "use": true
+    "use": false
   },
   {
     "theme": "material-palenight",
-    "use": true
+    "use": false
   },
   {
     "theme": "material",
@@ -129,15 +129,15 @@
   },
   {
     "theme": "mbo",
-    "use": true
+    "use": false
   },
   {
     "theme": "mdn-like",
-    "use": true
+    "use": false
   },
   {
     "theme": "midnight",
-    "use": true
+    "use": false
   },
   {
     "theme": "monokai",
@@ -145,7 +145,7 @@
   },
   {
     "theme": "moxer",
-    "use": true
+    "use": false
   },
   {
     "theme": "neat",
@@ -157,19 +157,19 @@
   },
   {
     "theme": "night",
-    "use": true
+    "use": false
   },
   {
     "theme": "nord",
-    "use": true
+    "use": false
   },
   {
     "theme": "oceanic-next",
-    "use": true
+    "use": false
   },
   {
     "theme": "panda-syntax",
-    "use": true
+    "use": false
   },
   {
     "theme": "paraiso-dark",
@@ -181,7 +181,7 @@
   },
   {
     "theme": "pastel-on-dark",
-    "use": true
+    "use": false
   },
   {
     "theme": "railscasts",
@@ -189,27 +189,27 @@
   },
   {
     "theme": "rubyblue",
-    "use": true
+    "use": false
   },
   {
     "theme": "seti",
-    "use": true
+    "use": false
   },
   {
     "theme": "shadowfox",
-    "use": true
+    "use": false
   },
   {
     "theme": "solarized",
-    "use": true
+    "use": false
   },
   {
     "theme": "ssms",
-    "use": true
+    "use": false
   },
   {
     "theme": "the-matrix",
-    "use": true
+    "use": false
   },
   {
     "theme": "tomorrow-night-bright",
@@ -221,7 +221,7 @@
   },
   {
     "theme": "ttcn",
-    "use": true
+    "use": false
   },
   {
     "theme": "twilight",
@@ -229,26 +229,26 @@
   },
   {
     "theme": "vibrant-ink",
-    "use": true
+    "use": false
   },
   {
     "theme": "xq-dark",
-    "use": true
+    "use": false
   },
   {
     "theme": "xq-light",
-    "use": true
+    "use": false
   },
   {
     "theme": "yeti",
-    "use": true
+    "use": false
   },
   {
     "theme": "yonce",
-    "use": true
+    "use": false
   },
   {
     "theme": "zenburn",
-    "use": true
+    "use": false
   }
 ]

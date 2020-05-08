@@ -7,7 +7,11 @@ function getThemesFromNodeModules() {
     .readdirSync('./node_modules/codemirror/theme')
     .map(filename => filename.replace(/\.css$/, ''))
     .map(theme => ({ theme, use: true })));
+
   fs.writeFileSync('./src/themes.json', JSON.stringify(themes, null, '  '));
+
+  const scss = themes.map(({theme}) => `@import "~codemirror/theme/${theme}";\n`).join``;
+  fs.writeFileSync('./src/themes.scss', scss);
 }
 // getThemesFromNodeModules();
 

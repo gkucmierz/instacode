@@ -2,7 +2,7 @@
 
 @import "reset-css";
 @import "~codemirror/lib/codemirror";
-@import "~codemirror/theme/monokai";
+@import "./themes";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

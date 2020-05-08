@@ -5,6 +5,7 @@ import { ipcRenderer, webFrame, remote } from 'electron';
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
 import { CodeService, CodePriority } from './code.service';
+import { SettingsService } from './settings.service';
 import { filter, take } from 'rxjs/operators';
 
 @Injectable({
@@ -25,7 +26,8 @@ export class ElectronService {
   constructor(
     private windowRef: WindowRefService,
     private router: Router,
-    private code: CodeService) {
+    private code: CodeService,
+    private settings: SettingsService) {
 
     this.window = windowRef.window;
 
@@ -65,7 +67,7 @@ export class ElectronService {
     });
 
     this.ipcRenderer.on('changeTheme' , (event, data) => {
-      console.log('changeTheme', data);
+      this.settings.set('theme', data);
     });
   }
 }
