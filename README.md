@@ -1,3 +1,7 @@
+# Moved to new repo
+
+https://github.com/gkucmierz/instacode-app
+
 # Instacode
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
